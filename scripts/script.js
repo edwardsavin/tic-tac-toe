@@ -1,8 +1,19 @@
 const gameBoard = (() => {
-  board = [];
+  const _board = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+  const drawBoard = () => {
+    let index = -1;
+
+    _board.forEach(() => {
+      index += 1;
+      document.querySelector(
+        `[data-index="${index}"]`
+      ).textContent = `${_board[index]}`;
+    });
+  };
 
   return {
-    board,
+    drawBoard,
   };
 })();
 

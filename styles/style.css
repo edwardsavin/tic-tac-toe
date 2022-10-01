@@ -92,3 +92,17 @@ svg {
     scroll-behavior: auto !important;
   }
 }
+
+main {
+  display: flex;
+  flex-direction: column;
+}
+
+
+.gameboard {
+  display: grid;
+  grid-template:
+    "a a a"
+    "b b b"
+    "c c c";
+}
