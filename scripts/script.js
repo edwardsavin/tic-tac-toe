@@ -64,6 +64,8 @@ const gameBoard = (() => {
     if (status) {
       alert(`${player} won!`);
       _removeActiveFields();
+    } else if (playerPositions.length === 5) {
+      alert("Draw!")
     }
   };
 
