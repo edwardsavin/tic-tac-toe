@@ -106,3 +106,9 @@ main {
     "b b b"
     "c c c";
 }
+
+.field {
+  cursor: pointer;
+  height: 6em;
+  border: 0.1em solid rgb(27, 106, 196);
+}

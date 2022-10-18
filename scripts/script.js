@@ -1,15 +1,32 @@
 const gameBoard = (() => {
-  const _board = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+  const _board = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 
   const drawBoard = () => {
-    let index = -1;
+    const _boardFields = document.querySelectorAll(".field");
 
-    _board.forEach(() => {
-      index += 1;
-      document.querySelector(
-        `[data-index="${index}"]`
-      ).textContent = `${_board[index]}`;
+    // Add event listener and playerAction only on fields that are empty
+    _boardFields.forEach((field) => {
+      if (!field.textContent) {
+        field.addEventListener(
+          "click",
+          () => {
+            _playerAction(field);
+          },
+          { once: true }
+        );
+      }
     });
+  };
+
+  // Add "X" or "0" to the specific field, depending on what player has the control
+  const _playerAction = (field) => {
+    if (player1.hasControl === "yes") {
+      field.textContent = `${player1.mark}`;
+      displayController.showControl(player2);
+    } else {
+      field.textContent = `${player2.mark}`;
+      displayController.showControl(player1);
+    }
   };
 
   return {
@@ -26,9 +43,10 @@ const playerFactory = (name, mark, type, hasControl) => {
   };
 };
 
-const player1 = playerFactory("Edward", "X", "human", "no");
+const player1 = playerFactory("Edward", "X", "human", "yes");
 const player2 = playerFactory("Joe", "0", "human", "no");
 
+// Switch control of players
 const displayController = (() => {
   const showControl = (player) => {
     if (player === player1) {
@@ -44,3 +62,5 @@ const displayController = (() => {
     showControl,
   };
 })();
+
+gameBoard.drawBoard();
