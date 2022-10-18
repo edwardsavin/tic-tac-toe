@@ -22,11 +22,20 @@ const gameBoard = (() => {
   const _playerAction = (field) => {
     if (player1.hasControl === "yes") {
       field.textContent = `${player1.mark}`;
+      _changeBoard(field.getAttribute("data-index"), `${player1.mark}`);
       displayController.showControl(player2);
     } else {
       field.textContent = `${player2.mark}`;
+      _changeBoard(field.getAttribute("data-index"), `${player2.mark}`);
       displayController.showControl(player1);
     }
+  };
+
+  // Change _board array with specific mark
+  const _changeBoard = (index, mark) => {
+    console.table(_board);
+    _board[index] = mark;
+    console.table(_board);
   };
 
   return {
