@@ -15,6 +15,16 @@
     <main>
       <div class="next-player"></div>
       <div class="match-status" hidden="true"></div>
+      <div class="name-inputs">
+        <legend>Please enter your name</legend>
+        <label for="name-player-one">Player One</label>
+        <input type="text" name="name-player-one" id="name-player-one" placeholder="Player 1" />
+        <label for="name-player-two">Player Two</label>
+        <input type="text" name="name-player-two" id="name-player-two" placeholder="Player 2" />
+      </div>
+      <button type="button" id="restart" onclick="gameBoard.restartGame()">
+        Start
+      </button>
       <div class="gameboard">
         <button class="field active" data-index="0"></button>
         <button class="field active" data-index="1"></button>
@@ -26,7 +36,6 @@
         <button class="field active" data-index="7"></button>
         <button class="field active" data-index="8"></button>
       </div>
-      <button type="button" id="restart" onclick="gameBoard.restartGame()">Start</button>
     </main>
 
     <script src="./scripts/script.js"></script>

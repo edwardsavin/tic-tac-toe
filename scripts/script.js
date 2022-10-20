@@ -12,10 +12,10 @@ const gameBoard = (() => {
     ["2", "4", "6"],
   ];
 
-  const drawBoard = () => {
+  const drawBoard = (draw = false) => {
     const _boardFields = document.querySelectorAll(".field.active");
 
-    // Add event listener and playerAction only on fields that are empty
+    // Add event listener and playerAction only when called
     _boardFields.forEach((field) => {
       const _sendAction = () => {
         if (field.classList.contains("active")) {
@@ -23,7 +23,7 @@ const gameBoard = (() => {
         }
       };
 
-      if (!field.textContent) {
+      if (draw === true) {
         field.addEventListener("click", _sendAction, { once: true });
       }
     });
@@ -110,9 +110,16 @@ const gameBoard = (() => {
     const _restartButton = document.querySelector("#restart");
     _restartButton.textContent = "Restart";
 
+    const _nameInputs = document.querySelector(".name-inputs");
+    if (!_nameInputs.getAttribute("hidden")) {
+      player1.name = `${getPlayer1Name()}`;
+      player2.name = `${getPlayer2Name()}`;
+      _nameInputs.setAttribute("hidden", true);
+    }
+
     _gameStatus(player1.name, player1.positions.sort());
     displayController.showControl();
-    drawBoard();
+    drawBoard(true);
   };
 
   return {
@@ -131,8 +138,28 @@ const playerFactory = (name, mark, type, hasControl, positions) => {
   };
 };
 
-const player1 = playerFactory("Edward", "X", "human", "yes", []);
-const player2 = playerFactory("Joe", "0", "human", "no", []);
+function getPlayer1Name() {
+  let inputPlayerName1 = document.querySelector("#name-player-one").value;
+
+  if (inputPlayerName1.length === 0) {
+    inputPlayerName1 = "Player 1";
+  }
+
+  return inputPlayerName1;
+}
+
+function getPlayer2Name() {
+  let inputPlayerName2 = document.querySelector("#name-player-two").value;
+
+  if (inputPlayerName2.length === 0) {
+    inputPlayerName2 = "Player 2";
+  }
+
+  return inputPlayerName2;
+}
+
+const player1 = playerFactory(`${getPlayer1Name()}`, "X", "human", "yes", []);
+const player2 = playerFactory(`${getPlayer2Name()}`, "0", "human", "no", []);
 
 // Switch control of players
 const displayController = (() => {
@@ -153,9 +180,5 @@ const displayController = (() => {
     showControl,
   };
 })();
-
-function checkFields() {
-  return document.querySelectorAll(".field.active");
-}
 
 gameBoard.drawBoard();
