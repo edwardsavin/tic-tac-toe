@@ -1,5 +1,5 @@
 const gameBoard = (() => {
-  const _board = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+  let _board = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 
   const _winningConditions = [
     ["0", "1", "2"],
@@ -17,16 +17,14 @@ const gameBoard = (() => {
 
     // Add event listener and playerAction only on fields that are empty
     _boardFields.forEach((field) => {
+      const _sendAction = () => {
+        if (field.classList.contains("active")) {
+          _playerAction(field);
+        }
+      };
+
       if (!field.textContent) {
-        field.addEventListener(
-          "click",
-          () => {
-            if (field.classList.contains("active")) {
-              _playerAction(field);
-            }
-          },
-          { once: true }
-        );
+        field.addEventListener("click", _sendAction, { once: true });
       }
     });
   };
@@ -57,15 +55,34 @@ const gameBoard = (() => {
   // Check if one of _winningConditions is met
   // Announce the winner
   const _gameStatus = (player, playerPositions) => {
-    let status = _winningConditions.find((a) =>
-      a.every((v, i) => v === playerPositions[i])
+    const matchStatus = document.querySelector(".match-status");
+    const nextPlayer = document.querySelector(".next-player");
+
+    // Filter and map the _winningConditions to check if one of them is equal to playerPositions
+    Array.prototype.intersect = function (x) {
+      return this.filter((e) => x.includes(e));
+    };
+
+    let mappedConditions = _winningConditions.map(
+      (x) => x.intersect(playerPositions).length == x.length
     );
 
+    let status = mappedConditions.some((e) => {
+      return e === true;
+    });
+
     if (status) {
-      alert(`${player} won!`);
       _removeActiveFields();
+      nextPlayer.setAttribute("hidden", true);
+      matchStatus.textContent = `${player} won!`;
+      matchStatus.removeAttribute("hidden");
     } else if (playerPositions.length === 5) {
-      alert("Draw!")
+      nextPlayer.setAttribute("hidden", true);
+      matchStatus.textContent = "It's a draw!";
+      matchStatus.removeAttribute("hidden");
+    } else if (player1.positions.length === 0) {
+      matchStatus.setAttribute("hidden", true);
+      nextPlayer.removeAttribute("hidden");
     }
   };
 
@@ -75,8 +92,32 @@ const gameBoard = (() => {
     });
   };
 
+  // Start the game/ reset everything to the beginning of the game
+  const restartGame = () => {
+    _board = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+
+    player1.positions = [];
+    player2.positions = [];
+
+    // Delete event listeners from fields
+    const _gameBoard = document.querySelector(".gameboard");
+    const _inactiveFields = document.querySelectorAll(".field");
+    _inactiveFields.forEach((field) => {
+      _gameBoard.replaceChild(field.cloneNode(), field);
+      field.classList.add("active");
+    });
+
+    const _restartButton = document.querySelector("#restart");
+    _restartButton.textContent = "Restart";
+
+    _gameStatus(player1.name, player1.positions.sort());
+    displayController.showControl();
+    drawBoard();
+  };
+
   return {
     drawBoard,
+    restartGame,
   };
 })();
 
@@ -95,7 +136,8 @@ const player2 = playerFactory("Joe", "0", "human", "no", []);
 
 // Switch control of players
 const displayController = (() => {
-  const showControl = (player) => {
+  const showControl = (player = player1) => {
+    const nextPlayer = document.querySelector(".next-player");
     if (player === player1) {
       player2.hasControl = "no";
       player1.hasControl = "yes";
@@ -103,6 +145,8 @@ const displayController = (() => {
       player1.hasControl = "no";
       player2.hasControl = "yes";
     }
+
+    nextPlayer.textContent = `${player.name} is choosing:`;
   };
 
   return {

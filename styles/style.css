@@ -98,6 +98,9 @@ main {
   flex-direction: column;
 }
 
+button {
+  cursor: pointer;
+}
 
 .gameboard {
   display: grid;
@@ -108,7 +111,6 @@ main {
 }
 
 .field {
-  cursor: pointer;
   height: 6em;
   border: 0.1em solid rgb(27, 106, 196);
 }

@@ -13,6 +13,8 @@
   </head>
   <body>
     <main>
+      <div class="next-player"></div>
+      <div class="match-status" hidden="true"></div>
       <div class="gameboard">
         <button class="field active" data-index="0"></button>
         <button class="field active" data-index="1"></button>
@@ -24,6 +26,7 @@
         <button class="field active" data-index="7"></button>
         <button class="field active" data-index="8"></button>
       </div>
+      <button type="button" id="restart" onclick="gameBoard.restartGame()">Start</button>
     </main>
 
     <script src="./scripts/script.js"></script>
