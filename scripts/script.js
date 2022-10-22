@@ -99,13 +99,7 @@ const gameBoard = (() => {
     player1.positions = [];
     player2.positions = [];
 
-    // Delete event listeners from fields
-    const _gameBoard = document.querySelector(".gameboard");
-    const _inactiveFields = document.querySelectorAll(".field");
-    _inactiveFields.forEach((field) => {
-      _gameBoard.replaceChild(field.cloneNode(), field);
-      field.classList.add("active");
-    });
+    _clearFieldListeners();
 
     const _restartButton = document.querySelector("#restart");
     _restartButton.textContent = "Restart";
@@ -119,7 +113,24 @@ const gameBoard = (() => {
 
     _gameStatus(player1.name, player1.positions.sort());
     displayController.showControl();
+    _placeActiveClass();
     drawBoard(true);
+  };
+
+  // Delete event listeners from fields
+  const _clearFieldListeners = () => {
+    const _gameBoard = document.querySelector(".gameboard");
+    const _inactiveFields = document.querySelectorAll(".field");
+    _inactiveFields.forEach((field) => {
+      _gameBoard.replaceChild(field.cloneNode(), field);
+    });
+  };
+
+  const _placeActiveClass = () => {
+    const _inactiveFields = document.querySelectorAll(".field");
+    _inactiveFields.forEach((field) => {
+      field.classList.add("active");
+    });
   };
 
   return {
