@@ -150,7 +150,9 @@ const playerFactory = (name, mark, type, hasControl, positions) => {
 };
 
 function getPlayer1Name() {
-  let inputPlayerName1 = document.querySelector("#name-player-one").value;
+  let inputPlayerName1 = document
+    .querySelector("#name-player-one")
+    .value.trim();
 
   if (inputPlayerName1.length === 0) {
     inputPlayerName1 = "Player 1";
@@ -160,7 +162,9 @@ function getPlayer1Name() {
 }
 
 function getPlayer2Name() {
-  let inputPlayerName2 = document.querySelector("#name-player-two").value;
+  let inputPlayerName2 = document
+    .querySelector("#name-player-two")
+    .value.trim();
 
   if (inputPlayerName2.length === 0) {
     inputPlayerName2 = "Player 2";

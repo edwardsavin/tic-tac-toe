@@ -13,29 +13,58 @@
   </head>
   <body>
     <main>
-      <div class="next-player"></div>
-      <div class="match-status" hidden="true"></div>
-      <div class="name-inputs">
-        <legend>Please enter your name</legend>
-        <label for="name-player-one">Player One</label>
-        <input type="text" name="name-player-one" id="name-player-one" placeholder="Player 1" />
-        <label for="name-player-two">Player Two</label>
-        <input type="text" name="name-player-two" id="name-player-two" placeholder="Player 2" />
+      <div class="main-container">
+        <div class="next-player"></div>
+        <div class="match-status" hidden="true"></div>
+        <div class="name-inputs">
+          <legend id="enter-name">Please enter your name</legend>
+          <div class="wrap-one">
+            <label for="name-player-one">Player One (X)</label>
+            <input
+              type="text"
+              name="name-player-one"
+              id="name-player-one"
+              placeholder="Player 1"
+              maxlength="35"
+            />
+          </div>
+          <div class="wrap-two">
+            <label for="name-player-two">Player Two (0)</label>
+            <input
+              type="text"
+              name="name-player-two"
+              id="name-player-two"
+              placeholder="Player 2"
+              maxlength="35"
+            />
+          </div>
+        </div>
+        <button type="button" id="restart" onclick="gameBoard.restartGame()">
+          Start
+        </button>
+        <div class="gameboard">
+          <button class="field active" data-index="0"></button>
+          <button class="field active" data-index="1"></button>
+          <button class="field active" data-index="2"></button>
+          <button class="field active" data-index="3"></button>
+          <button class="field active" data-index="4"></button>
+          <button class="field active" data-index="5"></button>
+          <button class="field active" data-index="6"></button>
+          <button class="field active" data-index="7"></button>
+          <button class="field active" data-index="8"></button>
+        </div>
       </div>
-      <button type="button" id="restart" onclick="gameBoard.restartGame()">
-        Start
-      </button>
-      <div class="gameboard">
-        <button class="field active" data-index="0"></button>
-        <button class="field active" data-index="1"></button>
-        <button class="field active" data-index="2"></button>
-        <button class="field active" data-index="3"></button>
-        <button class="field active" data-index="4"></button>
-        <button class="field active" data-index="5"></button>
-        <button class="field active" data-index="6"></button>
-        <button class="field active" data-index="7"></button>
-        <button class="field active" data-index="8"></button>
-      </div>
+      <footer class="footer">
+        <p>
+          Copyright ©
+          <script>
+            document.write(new Date().getFullYear());
+          </script>
+          <a href="https://edwardcs.com" target="_blank">
+            <strong>Edward Savin</strong>
+          </a>
+        </p>
+      </footer>
     </main>
 
     <script src="./scripts/script.js"></script>
